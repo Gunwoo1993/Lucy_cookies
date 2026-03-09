@@ -27,3 +27,140 @@
 .rotate-y-12 {
   transform: rotateY(12deg);
 }
+
+/* Review Marquee Animation */
+.review-marquee {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.review-track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+}
+
+.review-card {
+  width: 320px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.review-marquee-right .review-track {
+  animation: scroll-right 40s linear infinite;
+}
+
+.review-marquee-left .review-track {
+  animation: scroll-left 40s linear infinite;
+}
+
+.review-marquee:hover .review-track {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Gift Ribbon Styles */
+.ribbon-horizontal {
+  transform: perspective(100px) rotateX(-2deg);
+}
+
+.ribbon-band {
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ribbon-band::before,
+.ribbon-band::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.ribbon-band::before {
+  left: -20px;
+  border-width: 20px 20px 20px 0;
+  border-color: transparent #10b981 transparent transparent;
+  filter: brightness(0.8);
+}
+
+.ribbon-band::after {
+  right: -20px;
+  border-width: 20px 0 20px 20px;
+  border-color: transparent transparent transparent #10b981;
+  filter: brightness(0.8);
+}
+
+.ribbon-vertical .ribbon-band-vertical {
+  position: relative;
+  width: 100%;
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.15), inset 2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.ribbon-tail-v {
+  width: 0;
+  height: 0;
+  border-left: 2rem solid transparent;
+  border-right: 2rem solid transparent;
+  border-top: 2rem solid #10b981;
+  margin: 0 auto;
+  filter: brightness(0.85);
+}
+
+@media (min-width: 768px) {
+  .ribbon-tail-v {
+    border-left-width: 2.5rem;
+    border-right-width: 2.5rem;
+    border-top-width: 2.5rem;
+  }
+}
+
+.ribbon-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}

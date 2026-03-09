@@ -22,10 +22,10 @@ const translations = {
   id: {
     nav: { home: 'Beranda', story: 'Cerita Kami', menu: 'Menu', contact: 'Kontak', order: 'Pesan Sekarang' },
     hero: {
-      subtitle: 'Kelezatan Premium Indonesia',
-      title1: 'Seni',
-      title2: 'Nastar',
-      description: 'Rasakan kue emas legendaris Indonesia. Dibuat dengan tangan menggunakan mentega premium dan selai nanas segar.',
+      subtitle: 'Classic Indonesian Cookies, Crafted with Elegance.',
+      title1: 'Seni Kue Klasik',
+      title2: 'Indonesia',
+      description: 'Temukan keindahan rasa dalam setiap kue yang kami buat. Lucy Cookies menghadirkan koleksi kue klasik Indonesia: nastar lembut dengan selai nanas segar, kastengel kaya keju dengan rasa gurih yang elegan, serta putri salju yang halus dengan taburan gula lembut. Dibuat dengan mentega premium dan bahan pilihan, setiap gigitan menghadirkan keseimbangan sempurna antara tradisi, kualitas, dan kehangatan.',
       shopNow: 'Belanja Sekarang',
       ourStory: 'Cerita Kami'
     },
@@ -52,11 +52,11 @@ const translations = {
     story: {
       badge: 'Warisan Kami',
       title: 'Dari Dapur Lucy ke Rumah Anda',
-      description: 'Yang dimulai sebagai proyek dapur kecil untuk acara keluarga di Jakarta telah berkembang menjadi tradisi yang dicintai. Semangat Lucy untuk Nastar yang sempurna—keseimbangan yang tepat antara kulit mentega dan nanas asam manis—adalah yang mendorong kami setiap hari.',
+      description: 'Perjalanan Lucy Cookies dimulai dari dapur keluarga yang sederhana di Bekasi. Dari resep yang diwariskan dan dijaga dengan penuh perhatian, setiap kue dibuat dengan ketelitian dan dedikasi terhadap rasa yang sempurna. Kami percaya bahwa kue bukan sekadar hidangan, tetapi bagian dari momen berharga bersama keluarga dan orang terkasih. Dengan bahan-bahan premium dan proses pembuatan yang teliti, kami menghadirkan kehangatan dan kemewahan sederhana ke setiap rumah.',
       stat1: '100%',
-      stat1Label: 'Bahan Alami',
-      stat2: '30+',
-      stat2Label: 'Tahun Tradisi'
+      stat1Label: 'Bahan Pilihan',
+      stat2: 'Tradisi',
+      stat2Label: 'yang Dijaga'
     },
     quote: '"Nastar terbaik yang pernah saya makan di luar dapur nenek saya sendiri. Teksturnya benar-benar sempurna."',
     quoteAuthor: '— Maria S., Jakarta',
@@ -72,15 +72,15 @@ const translations = {
   en: {
     nav: { home: 'Home', story: 'Our Story', menu: 'Menu', contact: 'Contact', order: 'Order Now' },
     hero: {
-      subtitle: 'Premium Indonesian Delicacy',
-      title1: 'The Art of',
-      title2: 'Nastar',
-      description: 'Experience the legendary golden cookies of Indonesia. Handcrafted with premium butter and fresh pineapple jam.',
+      subtitle: 'Classic Indonesian Cookies, Crafted with Elegance.',
+      title1: 'The Art of Classic',
+      title2: 'Indonesian Cookies',
+      description: 'Discover the beauty of flavor in every cookie we craft. Lucy Cookies presents a curated collection of Indonesian classics: delicate nastar with fresh pineapple jam, rich kastengel with an elegant savory finish, and soft putri salju dusted with fine sugar. Made with premium butter and carefully selected ingredients, every bite brings the perfect balance of tradition, quality, and warmth.',
       shopNow: 'Shop Now',
       ourStory: 'Our Story'
     },
     products: {
-      title: 'The Golden Collection',
+      title: 'Legendary Menu',
       description: 'Every single cookie is handcrafted by Lucy using a secret family recipe passed down through generations. We use only the finest Indonesian ingredients to ensure that iconic taste.',
       nastar: {
         name: 'Classic Pineapple Nastar',
@@ -102,11 +102,11 @@ const translations = {
     story: {
       badge: 'Our Heritage',
       title: 'From Lucy\'s Kitchen to Your Home',
-      description: 'What started as a small kitchen project for family gatherings in Jakarta has blossomed into a beloved tradition. Lucy\'s passion for the perfect Nastar—the right balance of buttery crust and tangy pineapple—is what drives us every day.',
+      description: 'Lucy Cookies began in a humble family kitchen in Bekasi. Rooted in inherited recipes and crafted with great care, each cookie is made with precision and dedication to perfect taste. For us, cookies are more than treats, they are part of cherished moments shared with family and loved ones. Through premium ingredients and meticulous craftsmanship, we bring warmth and understated luxury to every home.',
       stat1: '100%',
-      stat1Label: 'Natural Ingredients',
-      stat2: '30+',
-      stat2Label: 'Years of Tradition'
+      stat1Label: 'Selected Ingredients',
+      stat2: 'Tradition',
+      stat2Label: 'Carefully Preserved'
     },
     quote: '"The best Nastar I\'ve ever had outside of my own grandmother\'s kitchen. The texture is simply divine."',
     quoteAuthor: '— Maria S., Jakarta',
@@ -159,9 +159,13 @@ const Navbar = ({ lang, setLang }: { lang: Language, setLang: (lang: Language) =
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-2xl font-serif font-bold tracking-widest text-brand-brown"
+          className="flex items-center"
         >
-          LUCY COOKIES
+          <img
+            src="/logo.jpeg"
+            alt="Lucy Cookies Logo"
+            className="h-12 w-12 md:h-14 md:w-14 object-contain rounded-full"
+          />
         </motion.div>
 
         {/* Desktop Menu */}
@@ -301,24 +305,36 @@ const FloatingCookie = () => {
 
 const ProductSection = ({ lang }: { lang: Language }) => {
   const t = translations[lang];
+  const nastarImages = ['/nastar_real.jpeg', '/nastar_real_2.jpeg'];
+  const [nastarIndex, setNastarIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNastarIndex((prev) => (prev + 1) % nastarImages.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [nastarImages.length]);
+
   const products = [
     {
       name: t.products.nastar.name,
       desc: t.products.nastar.desc,
       price: t.products.nastar.price,
-      image: "/nastar2.jpg"
+      image: nastarImages[nastarIndex],
+      isNastarCarousel: true
     },
     {
       name: t.products.kastengel.name,
       desc: t.products.kastengel.desc,
       price: t.products.kastengel.price,
-      image: "/kastengel.jpg"
+      image: "/cheese_stick_real_1.jpeg"
     },
     {
       name: t.products.putrisalju.name,
       desc: t.products.putrisalju.desc,
       price: t.products.putrisalju.price,
-      image: "/putrisalju.jpg"
+      image: "/putrisalju_real.jpeg"
     }
   ];
 
@@ -348,15 +364,33 @@ const ProductSection = ({ lang }: { lang: Language }) => {
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.6 }}
-                  className="w-full h-full p-8"
+                  className="w-full h-full"
                 >
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-contain rounded-2xl"
+                    className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
                   />
                 </motion.div>
+                {product.isNastarCarousel && (
+                  <>
+                    <button
+                      onClick={() => setNastarIndex((prev) => (prev - 1 + nastarImages.length) % nastarImages.length)}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-md text-brand-brown font-bold hover:bg-brand-gold hover:text-white transition-colors"
+                      aria-label="Previous Nastar image"
+                    >
+                      ‹
+                    </button>
+                    <button
+                      onClick={() => setNastarIndex((prev) => (prev + 1) % nastarImages.length)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-md text-brand-brown font-bold hover:bg-brand-gold hover:text-white transition-colors"
+                      aria-label="Next Nastar image"
+                    >
+                      ›
+                    </button>
+                  </>
+                )}
                 <div className="absolute top-4 right-4 bg-brand-cream/90 backdrop-blur-sm px-4 py-2 rounded-full font-bold text-sm shadow-sm">
                   {product.price}
                 </div>
@@ -381,6 +415,24 @@ const ProductSection = ({ lang }: { lang: Language }) => {
 
 const StorySection = ({ lang }: { lang: Language }) => {
   const t = translations[lang];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  const storyImages = [
+    '/story-1.png',
+    '/story-2.png',
+    '/story-3.png',
+    '/story-4.png'
+  ];
+
+  const totalSlides = storyImages.length + 1; // 이미지 4개 + CTA 1개
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % totalSlides);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section id="our-story" className="py-24 px-6 bg-brand-cream relative overflow-hidden">
       {/* Background Decorative Text */}
@@ -389,22 +441,85 @@ const StorySection = ({ lang }: { lang: Language }) => {
       </div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
-        <div className="relative">
-          <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl rotate-3">
-            <img 
-              src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=800" 
-              alt="Lucy Baking" 
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+        <div className="relative h-[500px] md:h-[600px]">
+          {/* Ken Burns Slideshow */}
+          <div className="absolute inset-0 rounded-3xl overflow-hidden shadow-2xl">
+            {storyImages.map((image, index) => (
+              <motion.div
+                key={image}
+                initial={{ opacity: 0 }}
+                animate={{
+                  opacity: currentImageIndex === index ? 1 : 0,
+                  scale: currentImageIndex === index ? [1, 1.1] : 1,
+                }}
+                transition={{
+                  opacity: { duration: 1 },
+                  scale: { duration: 4, ease: "linear" }
+                }}
+                className="absolute inset-0"
+              >
+                <img 
+                  src={image} 
+                  alt={`Lucy's Kitchen Story ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            ))}
+
+            {/* CTA Slide */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: currentImageIndex === storyImages.length ? 1 : 0,
+              }}
+              transition={{ opacity: { duration: 1 } }}
+              className="absolute inset-0 bg-gradient-to-br from-brand-gold via-brand-gold/90 to-brand-brown flex items-center justify-center p-8 md:p-12"
+            >
+              <div className="text-center text-brand-cream space-y-6">
+                <motion.div
+                  animate={{
+                    scale: currentImageIndex === storyImages.length ? [1, 1.05, 1] : 1,
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <Star size={48} className="mx-auto mb-4 fill-brand-cream" />
+                </motion.div>
+                <h3 className="text-3xl md:text-5xl font-serif leading-tight">
+                  {lang === 'id' ? 'Paket Ramadan 2026' : 'Ramadan 2026 Package'}
+                </h3>
+                <p className="text-lg md:text-xl opacity-90 max-w-md mx-auto">
+                  {lang === 'id' 
+                    ? 'Pesan hampers premium Anda sekarang. Diskon spesial untuk pemesanan bulan suci.' 
+                    : 'Order your premium hampers now. Special discounts for holy month orders.'}
+                </p>
+                <a
+                  href="https://wa.me/6289676634475"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-brand-cream text-brand-brown font-bold px-8 py-4 rounded-full uppercase tracking-widest text-sm hover:bg-white transition-colors shadow-xl"
+                >
+                  {lang === 'id' ? 'Pesan Sekarang' : 'Order Now'} <ChevronRight size={18} />
+                </a>
+              </div>
+            </motion.div>
           </div>
-          <div className="absolute -bottom-10 -right-10 w-64 aspect-square rounded-3xl overflow-hidden shadow-2xl -rotate-6 border-8 border-brand-cream hidden md:block">
-            <img 
-              src="https://images.unsplash.com/photo-1581339399838-2a120c18bba3?auto=format&fit=crop&q=80&w=800" 
-              alt="Ingredients" 
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+
+          {/* Progress Indicators */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+            {[...Array(totalSlides)].map((_, index) => (
+              <div
+                key={index}
+                className={`h-1 rounded-full transition-all duration-300 ${
+                  currentImageIndex === index 
+                    ? 'w-12 bg-brand-gold' 
+                    : 'w-6 bg-white/50'
+                }`}
+              />
+            ))}
           </div>
         </div>
 
@@ -435,27 +550,65 @@ const StorySection = ({ lang }: { lang: Language }) => {
 const ContactSection = ({ lang }: { lang: Language }) => {
   const t = translations[lang];
   return (
-    <section id="contact" className="py-24 px-6 bg-brand-brown text-brand-cream">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl md:text-5xl lg:text-7xl mb-8 md:mb-12 text-center">{t.contact.title}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div className="flex items-start gap-6">
-            <div className="w-12 h-12 rounded-full bg-brand-cream/10 flex items-center justify-center flex-shrink-0">
-              <MapPin size={20} className="text-brand-gold" />
+    <section id="contact" className="relative py-24 px-6 bg-brand-brown text-brand-cream overflow-hidden">
+      <div className="absolute -top-24 -left-20 w-72 h-72 rounded-full bg-brand-gold/10 blur-3xl" />
+      <div className="absolute -bottom-24 -right-20 w-80 h-80 rounded-full bg-brand-gold/10 blur-3xl" />
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        <h2 className="text-3xl md:text-5xl lg:text-7xl mb-3 md:mb-4 text-center">{t.contact.title}</h2>
+        <p className="text-center text-brand-cream/70 mb-10 md:mb-14 text-sm md:text-base tracking-wide">
+          {lang === 'id' ? 'Kami siap membantu pesanan premium Anda setiap hari.' : 'We are ready to assist your premium orders every day.'}
+        </p>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1.25fr_1fr] gap-8 md:gap-10 items-stretch">
+          <div className="flex flex-col gap-5 h-full">
+            <div className="flex items-start gap-6 bg-white/5 rounded-3xl border border-white/10 p-6 md:p-7 backdrop-blur-sm flex-1">
+              <div className="w-12 h-12 rounded-full bg-brand-cream/10 flex items-center justify-center flex-shrink-0">
+                <MapPin size={20} className="text-brand-gold" />
+              </div>
+              <div>
+                <h4 className="font-bold uppercase tracking-widest text-xs mb-2 opacity-60">{t.contact.kitchen}</h4>
+                <p className="text-lg md:text-xl font-serif whitespace-pre-line leading-relaxed">{t.contact.address}</p>
+              </div>
             </div>
-            <div>
-              <h4 className="font-bold uppercase tracking-widest text-xs mb-2 opacity-60">{t.contact.kitchen}</h4>
-              <p className="text-xl font-serif whitespace-pre-line">{t.contact.address}</p>
+
+            <div className="flex items-start gap-6 bg-white/5 rounded-3xl border border-white/10 p-6 md:p-7 backdrop-blur-sm flex-1">
+              <div className="w-12 h-12 rounded-full bg-brand-cream/10 flex items-center justify-center flex-shrink-0">
+                <Phone size={20} className="text-brand-gold" />
+              </div>
+              <div>
+                <h4 className="font-bold uppercase tracking-widest text-xs mb-2 opacity-60">{t.contact.phone}</h4>
+                <a href="https://wa.me/6289676634475" target="_blank" rel="noopener noreferrer" className="text-lg md:text-xl font-serif hover:text-brand-gold transition-colors">{t.contact.phoneNumber}</a>
+              </div>
             </div>
           </div>
-          <div className="flex items-start gap-6">
-            <div className="w-12 h-12 rounded-full bg-brand-cream/10 flex items-center justify-center flex-shrink-0">
-              <Phone size={20} className="text-brand-gold" />
+
+          <div className="flex flex-col rounded-3xl border border-brand-gold/30 bg-gradient-to-br from-brand-gold/20 via-white/5 to-white/0 p-7 md:p-8 shadow-2xl backdrop-blur-sm h-full">
+            <div className="flex items-center gap-2 text-brand-gold mb-4">
+              <Star size={16} className="fill-brand-gold" />
+              <span className="text-xs uppercase tracking-[0.2em] font-bold">
+                {lang === 'id' ? 'Ramadan 2026' : 'Ramadan 2026'}
+              </span>
             </div>
-            <div>
-              <h4 className="font-bold uppercase tracking-widest text-xs mb-2 opacity-60">{t.contact.phone}</h4>
-              <a href="https://wa.me/6289676634475" target="_blank" rel="noopener noreferrer" className="text-xl font-serif hover:text-brand-gold transition-colors">{t.contact.phoneNumber}</a>
-            </div>
+
+            <h3 className="text-2xl md:text-3xl font-serif mb-4 leading-tight">
+              {lang === 'id' ? 'Paket Spesial Ramadan & Lebaran' : 'Ramadan & Eid Special Packages'}
+            </h3>
+
+            <p className="text-brand-cream/80 text-sm md:text-base leading-relaxed mb-6 flex-1">
+              {lang === 'id'
+                ? 'Rayakan bulan suci dengan paket hampers & kue premium kami. Diskon spesial untuk pemesanan Ramadan. Tersedia paket favorit untuk berbuka dan lebaran.'
+                : 'Celebrate the holy month with our premium hampers & cookies. Special discounts for Ramadan orders. Favorite packages available for iftar and Eid celebrations.'}
+            </p>
+
+            <a
+              href="https://wa.me/6289676634475"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-brand-gold text-brand-brown font-bold px-6 py-3 rounded-full uppercase tracking-widest text-xs hover:bg-brand-cream transition-colors self-start"
+            >
+              {lang === 'id' ? 'Pesan Sekarang' : 'Order Now'} <ChevronRight size={14} />
+            </a>
           </div>
         </div>
       </div>
@@ -468,36 +621,42 @@ export default function App() {
   const t = translations[lang];
   const reviews = lang === 'id'
     ? [
-        {
-          text: 'Nastar terbaik yang pernah saya makan di luar dapur nenek saya sendiri. Teksturnya benar-benar sempurna.',
-          author: 'Rina A., Jakarta'
-        },
-        {
-          text: 'Kastengelnya gurih, renyah, dan wangi kejunya premium banget. Selalu jadi favorit keluarga.',
-          author: 'Dewi P., Bandung'
-        },
-        {
-          text: 'Putri Saljunya lembut dan manisnya pas, tidak berlebihan. Packaging juga cantik untuk hampers.',
-          author: 'Nadia K., Surabaya'
-        }
+        { text: 'Nastar terbaik yang pernah saya makan! Teksturnya benar-benar sempurna.', author: 'Rina A., Jakarta' },
+        { text: 'Kastengelnya gurih, renyah, dan wangi kejunya premium banget.', author: 'Dewi P., Bandung' },
+        { text: 'Putri Saljunya lembut dan manisnya pas, packaging cantik.', author: 'Nadia K., Surabaya' },
+        { text: 'Selalu pesan untuk acara keluarga, tidak pernah mengecewakan!', author: 'Budi S., Tangerang' },
+        { text: 'Kue kering terenak se-Jakarta, resep turun temurun memang beda!', author: 'Sari M., Jakarta Selatan' },
+        { text: 'Hampers Lebaran favoritku, semua rasa enak dan fresh!', author: 'Indah F., Bekasi' },
+        { text: 'Lucy Cookies bikin acara keluarga jadi spesial, recommended!', author: 'Farah L., Depok' },
+        { text: 'Kastengel keju premium, renyah dan wangi sampai akhir toples!', author: 'Arif W., Bogor' },
+        { text: 'Nastarnya lumer di mulut, isian nanas asli dan manis alami.', author: 'Maya R., Serpong' },
+        { text: 'Untuk hampers premium dan berkualitas, selalu ke Lucy Cookies!', author: 'Diana P., Jakarta Utara' },
+        { text: 'Putri Salju favorit anak-anak, teksturnya lembut dan tidak terlalu manis.', author: 'Tania K., Cibubur' },
+        { text: 'Kue kering artisan terbaik, packaging juga sangat mewah!', author: 'Ryan H., Jakarta Barat' },
+        { text: 'Pesen banyak untuk dibagikan ke keluarga, semua suka!', author: 'Linda T., Cikarang' },
+        { text: 'Kualitas premium dengan harga yang worth it, pasti repeat order!', author: 'Eka D., Bintaro' },
+        { text: 'Respon cepat, pengiriman aman, rasa juara. Perfect!', author: 'Hendra N., Tangerang Selatan' }
       ]
     : [
-        {
-          text: 'The best Nastar I have ever had outside my grandmother\'s kitchen. The texture is truly perfect.',
-          author: 'Rina A., Jakarta'
-        },
-        {
-          text: 'The kastengel is savory, crunchy, and has a rich premium cheese aroma. Family favorite every time.',
-          author: 'Dewi P., Bandung'
-        },
-        {
-          text: 'The Putri Salju is soft with balanced sweetness. Beautiful packaging too, perfect for gifting.',
-          author: 'Nadia K., Surabaya'
-        }
+        { text: 'The best Nastar I have ever had! The texture is truly perfect.', author: 'Rina A., Jakarta' },
+        { text: 'The kastengel is savory, crunchy, with premium cheese aroma.', author: 'Dewi P., Bandung' },
+        { text: 'Putri Salju is soft with balanced sweetness, beautiful packaging.', author: 'Nadia K., Surabaya' },
+        { text: 'Always order for family events, never disappoints!', author: 'Budi S., Tangerang' },
+        { text: 'Best cookies in Jakarta, heirloom recipes make the difference!', author: 'Sari M., South Jakarta' },
+        { text: 'My favorite Eid hampers, everything tastes amazing and fresh!', author: 'Indah F., Bekasi' },
+        { text: 'Lucy Cookies makes family gatherings special, highly recommended!', author: 'Farah L., Depok' },
+        { text: 'Premium cheese kastengel, crispy and aromatic until the last bite!', author: 'Arif W., Bogor' },
+        { text: 'The Nastar melts in your mouth, real pineapple filling with natural sweetness.', author: 'Maya R., Serpong' },
+        { text: 'For premium quality hampers, I always go to Lucy Cookies!', author: 'Diana P., North Jakarta' },
+        { text: 'Kids love the Putri Salju, perfectly soft and not too sweet.', author: 'Tania K., Cibubur' },
+        { text: 'Best artisan cookies, packaging is luxurious too!', author: 'Ryan H., West Jakarta' },
+        { text: 'Ordered in bulk for family, everyone loves them!', author: 'Linda T., Cikarang' },
+        { text: 'Premium quality at a fair price, will definitely reorder!', author: 'Eka D., Bintaro' },
+        { text: 'Fast response, safe delivery, champion taste. Perfect!', author: 'Hendra N., South Tangerang' }
       ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
       <Navbar lang={lang} setLang={setLang} />
       
       {/* Hero Section */}
@@ -570,30 +729,72 @@ export default function App() {
       <ProductSection lang={lang} />
 
       {/* Testimonials */}
-      <section className="py-24 md:py-32 px-6 bg-brand-gold text-brand-brown">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-serif text-center mb-10 md:mb-14">
+      <section className="py-12 md:py-16 bg-brand-gold text-brand-brown overflow-hidden">
+        <div className="max-w-full mx-auto">
+          <h2 className="text-3xl md:text-5xl font-serif text-center mb-10 md:mb-14 px-6">
             {lang === 'id' ? 'Ulasan Pelanggan' : 'Customer Reviews'}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {reviews.map((review, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-7 border border-white/60 shadow-lg"
-              >
-                <div className="flex items-center gap-1 mb-4">
-                  {[0, 1, 2, 3, 4].map((star) => (
-                    <Star key={star} size={18} className="text-amber-500 fill-amber-500" />
-                  ))}
-                </div>
-                <p className="text-base leading-relaxed mb-6">"{review.text}"</p>
-                <p className="text-sm font-bold uppercase tracking-wide opacity-70">{review.author}</p>
-              </motion.div>
-            ))}
+          
+          <div className="space-y-6">
+            {/* Row 1: Scroll Right */}
+            <div className="review-marquee review-marquee-right">
+              <div className="review-track">
+                {[...reviews.slice(0, 5), ...reviews.slice(0, 5)].map((review, idx) => (
+                  <div
+                    key={idx}
+                    className="review-card bg-white/80 backdrop-blur-sm rounded-3xl p-6 border border-white/60 shadow-lg flex-shrink-0"
+                  >
+                    <div className="flex items-center gap-1 mb-3">
+                      {[0, 1, 2, 3, 4].map((star) => (
+                        <Star key={star} size={16} className="text-amber-500 fill-amber-500" />
+                      ))}
+                    </div>
+                    <p className="text-sm leading-relaxed mb-4">"{review.text}"</p>
+                    <p className="text-xs font-bold uppercase tracking-wide opacity-70">{review.author}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Row 2: Scroll Left */}
+            <div className="review-marquee review-marquee-left">
+              <div className="review-track">
+                {[...reviews.slice(5, 10), ...reviews.slice(5, 10)].map((review, idx) => (
+                  <div
+                    key={idx}
+                    className="review-card bg-white/80 backdrop-blur-sm rounded-3xl p-6 border border-white/60 shadow-lg flex-shrink-0"
+                  >
+                    <div className="flex items-center gap-1 mb-3">
+                      {[0, 1, 2, 3, 4].map((star) => (
+                        <Star key={star} size={16} className="text-amber-500 fill-amber-500" />
+                      ))}
+                    </div>
+                    <p className="text-sm leading-relaxed mb-4">"{review.text}"</p>
+                    <p className="text-xs font-bold uppercase tracking-wide opacity-70">{review.author}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Row 3: Scroll Right */}
+            <div className="review-marquee review-marquee-right">
+              <div className="review-track">
+                {[...reviews.slice(10, 15), ...reviews.slice(10, 15)].map((review, idx) => (
+                  <div
+                    key={idx}
+                    className="review-card bg-white/80 backdrop-blur-sm rounded-3xl p-6 border border-white/60 shadow-lg flex-shrink-0"
+                  >
+                    <div className="flex items-center gap-1 mb-3">
+                      {[0, 1, 2, 3, 4].map((star) => (
+                        <Star key={star} size={16} className="text-amber-500 fill-amber-500" />
+                      ))}
+                    </div>
+                    <p className="text-sm leading-relaxed mb-4">"{review.text}"</p>
+                    <p className="text-xs font-bold uppercase tracking-wide opacity-70">{review.author}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -603,9 +804,11 @@ export default function App() {
       {/* Footer */}
       <footer className="py-12 px-6 bg-brand-brown border-t border-white/10 text-brand-cream/40 text-center">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="text-xl font-serif font-bold tracking-widest text-brand-cream">
-            LUCY COOKIES
-          </div>
+          <img
+            src="/logo.jpeg"
+            alt="Lucy Cookies Logo"
+            className="h-12 w-12 md:h-14 md:w-14 object-contain rounded-full"
+          />
           <div className="text-xs uppercase tracking-widest font-bold">
             {t.footer}
           </div>
