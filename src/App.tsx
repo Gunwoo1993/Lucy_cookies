@@ -52,7 +52,7 @@ const translations = {
     story: {
       badge: 'Warisan Kami',
       title: 'Dari Dapur Lucy ke Rumah Anda',
-      description: 'Perjalanan Lucy Cookies dimulai dari dapur keluarga yang sederhana di Bekasi. Dari resep yang diwariskan dan dijaga dengan penuh perhatian, setiap kue dibuat dengan ketelitian dan dedikasi terhadap rasa yang sempurna. Kami percaya bahwa kue bukan sekadar hidangan, tetapi bagian dari momen berharga bersama keluarga dan orang terkasih. Dengan bahan-bahan premium dan proses pembuatan yang teliti, kami menghadirkan kehangatan dan kemewahan sederhana ke setiap rumah.',
+      description: 'Perjalanan Lucy Cookies dimulai dari dapur keluarga yang sederhana di indonesia. Dari resep yang diwariskan dan dijaga dengan penuh perhatian, setiap kue dibuat dengan ketelitian dan dedikasi terhadap rasa yang sempurna. Kami percaya bahwa kue bukan sekadar hidangan, tetapi bagian dari momen berharga bersama keluarga dan orang terkasih. Dengan bahan-bahan premium dan proses pembuatan yang teliti, kami menghadirkan kehangatan dan kemewahan sederhana ke setiap rumah.',
       stat1: '100%',
       stat1Label: 'Bahan Pilihan',
       stat2: 'Tradisi',
@@ -62,8 +62,8 @@ const translations = {
     quoteAuthor: '— Maria S., Jakarta',
     contact: {
       title: 'Mari Terhubung',
-      kitchen: 'Dapur Kami',
-      address: 'Jatirasa, Jatiasih, Bekasi, West Java 17424',
+      kitchen: '배송가능지역',
+      address: 'Jabodetabek',
       phone: 'Pesan via WhatsApp',
       phoneNumber: '+62 896-7663-4475'
     },
@@ -112,8 +112,8 @@ const translations = {
     quoteAuthor: '— Maria S., Jakarta',
     contact: {
       title: 'Let\'s Connect',
-      kitchen: 'Our Kitchen',
-      address: 'Jatirasa, Jatiasih, Bekasi, West Java 17424',
+      kitchen: 'Shipping Area',
+      address: 'Jabodetabek',
       phone: 'Order via WhatsApp',
       phoneNumber: '+62 896-7663-4475'
     },
